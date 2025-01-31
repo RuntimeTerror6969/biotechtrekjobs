@@ -1,6 +1,16 @@
+
+import { useNavigate } from 'react-router-dom';
+
 const JobCard = ({ job }) => {
+  const navigate = useNavigate();
+
+  const handleApply = () => {
+    navigate(`/apply-job/${job._id}`, { state: { job } });
+  };
+
   return (
     <div className="border dark:border-gray-700 rounded-lg p-6 mb-4 shadow-sm flex bg-white dark:bg-gray-800 transition-colors duration-200">
+      {/* Previous content remains the same */}
       <div className="flex-grow">
         <h2 className="text-xl font-bold mb-2 dark:text-white">{job.title}</h2>
         <p className="text-gray-600 dark:text-gray-300 mb-2">
@@ -33,7 +43,10 @@ const JobCard = ({ job }) => {
         </div>
       </div>
       <div className="flex items-center">
-        <button className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors duration-200">
+        <button 
+          onClick={handleApply}
+          className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors duration-200"
+        >
           Apply Now
         </button>
       </div>
@@ -41,4 +54,4 @@ const JobCard = ({ job }) => {
   );
 };
 
-export default JobCard;
+export default JobCard

@@ -2,170 +2,168 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useTheme } from "../../context/ThemeContext";
-import { Moon, Sun, Menu, X } from "lucide-react"; // Using lucide-react icons
-import logo from "../../assets/biotechtreklogo.jpg"; // Your logo path
-import darkLogo from "../../assets/btt white logo.png"; // Your dark mode logo path
+import { Moon, Sun, Menu, X, User } from "lucide-react";
+import logo from "../../assets/biotechtreklogo.jpg";
+import darkLogo from "../../assets/btt white logo.png";
+import { BriefcaseBusiness } from "lucide-react";
 
 const Navbar = () => {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
   const { darkMode, toggleDarkMode } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
 
   const isAdmin = user?.role === "admin";
 
+  // Function to close the menu
+  const closeMenu = () => setIsOpen(false);
+
   return (
-    <nav
-      className={`bg-white ${
-        darkMode ? "dark:bg-gray-800" : ""
-      } shadow-lg fixed w-full transition-colors duration-200 border-2 border-yellow-500`}
-    >
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="flex justify-between items-center h-16">
-          {/* Menu button */}
+    <nav className={`bg-white ${darkMode ? "dark:bg-gray-800" : ""} shadow-lg fixed w-full transition-colors duration-200 border-2 border-yellow-500`}>
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="flex h-24"> {/* Increased height for better visibility */}
+          {/* Left Section - Menu Button */}
           <div className="flex items-center">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"
+              className="p-3 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg" // Increased padding
             >
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
+              {isOpen ? <X size={28} /> : <Menu size={28} />} {/* Increased icon size */}
             </button>
           </div>
 
-          {/* Centered Logo */}
-          <div className="flex-1 flex justify-center">
-            <Link
-              to="/"
-              className="text-xl font-bold flex items-center gap-4 dark:text-white"
-            >
-              <img
-                src={darkMode ? darkLogo : logo}
-                alt="BioTechTrek"
-                className="h-16 w-auto" // Slightly larger (h-14 instead of h-12)
+          {/* Center Section - Logo */}
+          <div className="flex-1 flex justify-center items-center">
+            <Link to="/" className="text-4xl font-bold"> {/* Increased font size */}
+              <img 
+                src={darkMode ? darkLogo : logo} 
+                alt="BioTechTrek" 
+                className="h-20 w-auto sm:w-64 md:w-72 lg:w-80" // Increased logo size
               />
             </Link>
           </div>
 
-          {/* Right section with links */}
-          <div className="flex items-center gap-6">
-            {/* Dark mode toggle */}
-            <button
-              onClick={toggleDarkMode}
-              className="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200"
-              aria-label="Toggle dark mode"
-            >
-              {darkMode ? (
-                <Sun className="w-5 h-5 text-yellow-500" />
-              ) : (
-                <Moon className="w-5 h-5 text-gray-600" />
-              )}
-            </button>
-
+          {/* Right Section - Navigation Links */}
+          <div className="flex items-center gap-6 text-xl"> {/* Increased text size and adjusted gap */}
             {user ? (
               <>
                 {isAdmin && (
                   <Link
                     to="/post-job"
-                    className="hover:text-blue-500 dark:text-gray-200 dark:hover:text-blue-400"
+                    className="hidden md:flex hover:text-blue-500 dark:text-gray-200 dark:hover:text-blue-400"
+                    onClick={closeMenu} // Close menu on click
                   >
                     Add Jobs
                   </Link>
                 )}
+
                 <Link
                   to="/jobs"
-                  className="hover:text-blue-500 dark:text-gray-200 dark:hover:text-blue-400"
+                  className="hover:text-blue-500 dark:text-gray-200 dark:hover:text-blue-400 flex items-center gap-2"
+                  onClick={closeMenu} // Close menu on click
                 >
-                  Browse Jobs
+                  <span className="hidden md:inline">Jobs</span>
                 </Link>
+
                 <Link
                   to="/applications"
-                  className="hover:text-blue-500 dark:text-gray-200 dark:hover:text-blue-400"
+                  className="hover:text-blue-500 dark:text-gray-200 dark:hover:text-blue-400 flex items-center gap-2"
+                  onClick={closeMenu} // Close menu on click
                 >
-                  My Applications
+                  <BriefcaseBusiness className="w-7 h-7 md:hidden" /> {/* Increased icon size */}
+                  <span className="hidden md:inline">Applications</span>
                 </Link>
+
                 <Link
                   to="/profile"
-                  className="hover:text-blue-500 dark:text-gray-200 dark:hover:text-blue-400"
+                  className="hover:text-blue-500 dark:text-gray-200 dark:hover:text-blue-400 p-2"
+                  onClick={closeMenu} // Close menu on click
                 >
-                  Profile
+                  <User className="w-7 h-7" /> {/* Increased icon size */}
                 </Link>
+            
                 <button
-                  onClick={logout}
-                  className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded transition-colors duration-200"
+                  onClick={toggleDarkMode}
+                  className="p-3 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200"
+                  aria-label="Toggle dark mode"
                 >
-                  Logout
+                  {darkMode ? (
+                    <Sun className="w-7 h-7 text-yellow-500" /> 
+                  ) : (
+                    <Moon className="w-7 h-7 text-gray-600" />
+                  )}
                 </button>
               </>
             ) : (
-              <div className="flex gap-4">
-                <Link
-                  to="/login"
-                  className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition-colors duration-200"
-                >
-                  Login
-                </Link>
-                <Link
-                  to="/register"
-                  className="border border-blue-500 text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900 px-4 py-2 rounded transition-colors duration-200"
-                >
-                  Register
-                </Link>
-              </div>
+              <Link
+                to="/auth"
+                className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 text-xl rounded-lg transition-colors duration-200"
+                onClick={closeMenu} // Close menu on click
+              >
+                Login
+              </Link>
             )}
           </div>
         </div>
-
-        {/* Mobile Menu */}
-        {isOpen && (
-          <div className="absolute top-16 left-0 w-full bg-white dark:bg-gray-800 shadow-lg z-50">
-            <div className="px-2 pt-2 pb-3 space-y-1">
-              <Link
-                to="/"
-                className="block px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-200"
-              >
-                Home
-              </Link>
-              <Link
-                to="/jobs"
-                className="block px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-200"
-              >
-                Browse Jobs
-              </Link>
-              <Link
-                to="/applications"
-                className="block px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-200"
-              >
-                My Applications
-              </Link>
-              <Link
-                to="/profile"
-                className="block px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-200"
-              >
-                Profile
-              </Link>
-              {isAdmin && (
-                <Link
-                  to="/add-jobs"
-                  className="block px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-200"
-                >
-                  Add Jobs
-                </Link>
-              )}
-              <Link
-                to="/about"
-                className="block px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-200"
-              >
-                About Us
-              </Link>
-              <Link
-                to="/contact"
-                className="block px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-200"
-              >
-                Contact Us
-              </Link>
-            </div>
-          </div>
-        )}
       </div>
+
+      {/* Mobile Menu */}
+      {isOpen && (
+        <div className="absolute top-24 left-0 w-full bg-white dark:bg-gray-800 shadow-lg z-50">
+          <div className="px-6 py-6 space-y-5"> {/* Increased spacing */}
+            <Link
+              to="/"
+              className="block px-4 py-3 text-lg rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-200"
+              onClick={closeMenu} // Close menu on click
+            >
+              Home
+            </Link>
+            <Link
+              to="/jobs"
+              className="block px-4 py-3 text-lg rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-200"
+              onClick={closeMenu} // Close menu on click
+            >
+              Browse Jobs
+            </Link>
+            <Link
+              to="/applications"
+              className="block px-4 py-3 text-lg rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-200"
+              onClick={closeMenu} // Close menu on click
+            >
+              My Applications
+            </Link>
+            <Link
+              to="/profile"
+              className="block px-4 py-3 text-lg rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-200"
+              onClick={closeMenu} // Close menu on click
+            >
+              Profile
+            </Link>
+            {isAdmin && (
+              <Link
+                to="/post-job"
+                className="block px-4 py-3 text-lg rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-200"
+                onClick={closeMenu} // Close menu on click
+              >
+                Add Jobs
+              </Link>
+            )}
+            <Link
+              to="/about"
+              className="block px-4 py-3 text-lg rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-200"
+              onClick={closeMenu} // Close menu on click
+            >
+              About Us
+            </Link>
+            <Link
+              to="/contact"
+              className="block px-4 py-3 text-lg rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-200"
+              onClick={closeMenu} // Close menu on click
+            >
+              Contact Us
+            </Link>
+          </div>
+        </div>
+      )}
     </nav>
   );
 };
