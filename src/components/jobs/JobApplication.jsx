@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 
 const JobApplication = () => {
   const { jobId } = useParams();
@@ -7,54 +7,57 @@ const JobApplication = () => {
   const { state } = useLocation();
   const job = state?.job;
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    resume: null
+    name: "",
+    email: "",
+    resume: null,
   });
 
   const handleInputChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   const handleFileChange = (e) => {
     setFormData({
       ...formData,
-      resume: e.target.files[0]
+      resume: e.target.files[0],
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
+    setError("");
 
     const submitData = new FormData();
-    submitData.append('name', formData.name);
-    submitData.append('email', formData.email);
-    submitData.append('resume', formData.resume);
+    submitData.append("name", formData.name);
+    submitData.append("email", formData.email);
+    submitData.append("resume", formData.resume);
 
     try {
-      const response = await fetch(`/api/applications/apply-job/${jobId}`, {
-        method: 'POST',
-        body: submitData,
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+      const response = await fetch(
+        `https://bio-backend-kappa.vercel.app/api/applications/apply-job/${jobId}`,
+        {
+          method: "POST",
+          body: submitData,
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         }
-      });
+      );
 
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.msg || 'Failed to submit application');
+        throw new Error(data.msg || "Failed to submit application");
       }
 
       const data = await response.json();
-      navigate('/applications', { 
-        state: { message: data.msg } 
+      navigate("/applications", {
+        state: { message: data.msg },
       });
     } catch (err) {
       setError(err.message);
@@ -74,14 +77,23 @@ const JobApplication = () => {
   return (
     <div className="max-w-4xl mx-auto p-6 ">
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 space-y-8">
-        <h2 className="text-3xl font-bold mb-6 dark:text-white">Apply for {job.title}</h2>
-        
+        <h2 className="text-3xl font-bold mb-6 dark:text-white">
+          Apply for {job.title}
+        </h2>
+
         {/* Company Information Section */}
         <div className="space-y-6">
-          <h3 className="text-xl font-semibold dark:text-white">About the Company</h3>
+          <h3 className="text-xl font-semibold dark:text-white">
+            About the Company
+          </h3>
           <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-6">
-            <h4 className="font-bold text-lg mb-2 dark:text-white">{job.companyName}</h4>
-            <p className="text-gray-600 dark:text-gray-300">{job.companyDescription || "Join our innovative team and be part of something special."}</p>
+            <h4 className="font-bold text-lg mb-2 dark:text-white">
+              {job.companyName}
+            </h4>
+            <p className="text-gray-600 dark:text-gray-300">
+              {job.companyDescription ||
+                "Join our innovative team and be part of something special."}
+            </p>
           </div>
         </div>
 
@@ -99,8 +111,12 @@ const JobApplication = () => {
                 <p className="font-medium dark:text-white">${job.salary}</p>
               </div>
               <div>
-                <p className="text-gray-600 dark:text-gray-400">Employment Type</p>
-                <p className="font-medium dark:text-white">{job.employmentType}</p>
+                <p className="text-gray-600 dark:text-gray-400">
+                  Employment Type
+                </p>
+                <p className="font-medium dark:text-white">
+                  {job.employmentType}
+                </p>
               </div>
               <div>
                 <p className="text-gray-600 dark:text-gray-400">Posted On</p>
@@ -109,15 +125,19 @@ const JobApplication = () => {
                 </p>
               </div>
             </div>
-            
+
             <div className="space-y-4">
               <div>
-                <p className="text-gray-600 dark:text-gray-400 mb-2">Description</p>
+                <p className="text-gray-600 dark:text-gray-400 mb-2">
+                  Description
+                </p>
                 <p className="dark:text-white">{job.description}</p>
               </div>
-              
+
               <div>
-                <p className="text-gray-600 dark:text-gray-400 mb-2">Required Skills</p>
+                <p className="text-gray-600 dark:text-gray-400 mb-2">
+                  Required Skills
+                </p>
                 <div className="flex flex-wrap gap-2">
                   {job.skillsRequired?.map((skill, index) => (
                     <span
@@ -135,13 +155,17 @@ const JobApplication = () => {
 
         {/* Application Form Section */}
         <div className="space-y-6">
-          <h3 className="text-xl font-semibold dark:text-white">Submit Your Application</h3>
+          <h3 className="text-xl font-semibold dark:text-white">
+            Submit Your Application
+          </h3>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="border dark:border-gray-700 rounded-lg p-6">
               <div className="grid grid-cols-2 gap-6 mb-6">
                 <div>
-                  <label className="block text-gray-700 dark:text-gray-300 mb-2">Name</label>
-                  <input 
+                  <label className="block text-gray-700 dark:text-gray-300 mb-2">
+                    Name
+                  </label>
+                  <input
                     type="text"
                     name="name"
                     value={formData.name}
@@ -151,8 +175,10 @@ const JobApplication = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-gray-700 dark:text-gray-300 mb-2">Email</label>
-                  <input 
+                  <label className="block text-gray-700 dark:text-gray-300 mb-2">
+                    Email
+                  </label>
+                  <input
                     type="email"
                     name="email"
                     value={formData.email}
@@ -164,7 +190,9 @@ const JobApplication = () => {
               </div>
 
               <div>
-                <label className="block text-gray-700 dark:text-gray-300 mb-2">Resume</label>
+                <label className="block text-gray-700 dark:text-gray-300 mb-2">
+                  Resume
+                </label>
                 <input
                   type="file"
                   onChange={handleFileChange}
@@ -172,7 +200,9 @@ const JobApplication = () => {
                   required
                   className="w-full p-2 border rounded-md dark:border-gray-600"
                 />
-                <p className="text-sm text-gray-500 mt-1">Accepted formats: PDF, DOC, DOCX</p>
+                <p className="text-sm text-gray-500 mt-1">
+                  Accepted formats: PDF, DOC, DOCX
+                </p>
               </div>
             </div>
 
@@ -195,7 +225,7 @@ const JobApplication = () => {
                 disabled={loading}
                 className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:opacity-50 transition-colors duration-200"
               >
-                {loading ? 'Submitting...' : 'Submit Application'}
+                {loading ? "Submitting..." : "Submit Application"}
               </button>
             </div>
           </form>

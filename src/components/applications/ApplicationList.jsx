@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 const ApplicationList = () => {
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const location = useLocation();
 
   useEffect(() => {
@@ -13,14 +13,17 @@ const ApplicationList = () => {
 
   const fetchApplications = async () => {
     try {
-      const response = await fetch('/api/applications/view-applications', {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+      const response = await fetch(
+        "https://bio-backend-kappa.vercel.app/api/applications/my-applications",
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         }
-      });
+      );
 
       if (!response.ok) {
-        throw new Error('Failed to fetch applications');
+        throw new Error("Failed to fetch applications");
       }
 
       const data = await response.json();
@@ -35,7 +38,9 @@ const ApplicationList = () => {
   if (loading) {
     return (
       <div className="max-w-4xl mx-auto p-6">
-        <h2 className="text-2xl font-bold mb-6 mt-20">Loading applications...</h2>
+        <h2 className="text-2xl font-bold mb-6 mt-20">
+          Loading applications...
+        </h2>
       </div>
     );
   }
@@ -54,7 +59,7 @@ const ApplicationList = () => {
   return (
     <div className="max-w-4xl mx-auto p-6">
       <h2 className="text-2xl font-bold mb-6 mt-20">My Applications</h2>
-      
+
       {location.state?.message && (
         <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
           {location.state.message}
@@ -63,7 +68,9 @@ const ApplicationList = () => {
 
       <div className="space-y-4">
         {applications.length === 0 ? (
-          <p className="text-gray-600 dark:text-gray-400">No applications found.</p>
+          <p className="text-gray-600 dark:text-gray-400">
+            No applications found.
+          </p>
         ) : (
           applications.map((app) => (
             <div
@@ -72,7 +79,9 @@ const ApplicationList = () => {
             >
               <div>
                 <h3 className="font-bold dark:text-white">{app.job?.title}</h3>
-                <p className="text-gray-600 dark:text-gray-300">{app.job?.companyName}</p>
+                <p className="text-gray-600 dark:text-gray-300">
+                  {app.job?.companyName}
+                </p>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
                   Applied: {new Date(app.createdAt).toLocaleDateString()}
                 </p>

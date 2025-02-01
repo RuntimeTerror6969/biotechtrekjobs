@@ -80,8 +80,6 @@
 
 // export default App;
 
-
-
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/routing/ProtectedRoute";
@@ -97,7 +95,6 @@ import Footer from "./components/layout/Footer";
 import Layout from "./components/layout/Layout";
 import AddJobs from "./components/jobs/AddJobs";
 import JobApplication from "./components/jobs/JobApplication";
-
 
 const App = () => {
   return (
@@ -116,7 +113,7 @@ const App = () => {
                 }
               />
               <Route path="/jobs" element={<JobList />} />
-              
+
               <Route
                 path="/post-job"
                 element={
@@ -138,7 +135,7 @@ const App = () => {
               <Route
                 path="/profile"
                 element={
-                  <ProtectedRoute roles={["employer", "candidate"]}>
+                  <ProtectedRoute roles={["employer", "candidate", "admin"]}>
                     <Profile />
                   </ProtectedRoute>
                 }
@@ -147,17 +144,18 @@ const App = () => {
               <Route path="/" element={<JobList />} />
               <Route path="/company" element={<AboutCompany />} />
               <Route path="/terms" element={<TermsAndConditions />} />
-              <Route path="/applications" element={<ApplicationList />} />
-              <Route path="/about" element={<AboutCompany/>}/>
-              <Route path="/apply-job/:jobId" 
-              element={
-                <ProtectedRoute roles={["candidate"]}>
-              <JobApplication />
-              </ProtectedRoute>
-              } />
-
+              {/* <Route path="/applications" element={<ApplicationList />} /> */}
+              <Route path="/about" element={<AboutCompany />} />
+              <Route
+                path="/apply-job/:jobId"
+                element={
+                  <ProtectedRoute roles={["candidate"]}>
+                    <JobApplication />
+                  </ProtectedRoute>
+                }
+              />
             </Routes>
-            
+            <Footer />
           </div>
         </ThemeProvider>
       </AuthProvider>
