@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { LogOut } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const { user, logout } = useAuth();
@@ -10,10 +11,16 @@ const Profile = () => {
     resume: null,
     skills: "",
   });
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     alert("Profile updated successfully");
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate("/auth");
   };
 
   return (
@@ -25,7 +32,9 @@ const Profile = () => {
           <input
             type="text"
             value={profile.fullName}
-            onChange={(e) => setProfile({ ...profile, fullName: e.target.value })}
+            onChange={(e) =>
+              setProfile({ ...profile, fullName: e.target.value })
+            }
             className="w-full p-2 border rounded"
           />
         </div>
@@ -42,7 +51,9 @@ const Profile = () => {
           <label className="block mb-2">Resume</label>
           <input
             type="file"
-            onChange={(e) => setProfile({ ...profile, resume: e.target.files[0] })}
+            onChange={(e) =>
+              setProfile({ ...profile, resume: e.target.files[0] })
+            }
             className="w-full p-2 border rounded"
           />
         </div>
@@ -55,11 +66,17 @@ const Profile = () => {
             rows="4"
           />
         </div>
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
+        <button
+          type="submit"
+          className="bg-blue-500 text-white px-4 py-2 rounded"
+        >
           Update Profile
         </button>
       </form>
-      <button onClick={logout} className="mt-4 bg-red-500 text-white px-4 py-2 rounded flex items-center gap-2">
+      <button
+        onClick={handleLogout}
+        className="mt-4 bg-red-500 text-white px-4 py-2 rounded flex items-center gap-2"
+      >
         <LogOut className="w-5 h-5" /> Logout
       </button>
     </div>

@@ -103,9 +103,18 @@ const App = () => {
         <ThemeProvider>
           <div>
             <Navbar />
+
             <Routes>
               <Route
                 path="/auth"
+                element={
+                  <Layout>
+                    <AuthForm />
+                  </Layout>
+                }
+              />
+              <Route
+                path="/login"
                 element={
                   <Layout>
                     <AuthForm />
