@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
+import { LogOut } from "lucide-react";
 
 const Profile = () => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const [profile, setProfile] = useState({
     fullName: "",
     phone: "",
@@ -12,22 +13,19 @@ const Profile = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle profile update
     alert("Profile updated successfully");
   };
 
   return (
     <div className="max-w-2xl mx-auto p-6">
-      <h2 className="text-2xl font-bold mb-6">Profile</h2>
+      <h2 className="text-2xl font-bold mb-6 mt-20">Profile</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label className="block mb-2">Full Name</label>
           <input
             type="text"
             value={profile.fullName}
-            onChange={(e) =>
-              setProfile({ ...profile, fullName: e.target.value })
-            }
+            onChange={(e) => setProfile({ ...profile, fullName: e.target.value })}
             className="w-full p-2 border rounded"
           />
         </div>
@@ -44,9 +42,7 @@ const Profile = () => {
           <label className="block mb-2">Resume</label>
           <input
             type="file"
-            onChange={(e) =>
-              setProfile({ ...profile, resume: e.target.files[0] })
-            }
+            onChange={(e) => setProfile({ ...profile, resume: e.target.files[0] })}
             className="w-full p-2 border rounded"
           />
         </div>
@@ -59,14 +55,15 @@ const Profile = () => {
             rows="4"
           />
         </div>
-        <button
-          type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded"
-        >
+        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
           Update Profile
         </button>
       </form>
+      <button onClick={logout} className="mt-4 bg-red-500 text-white px-4 py-2 rounded flex items-center gap-2">
+        <LogOut className="w-5 h-5" /> Logout
+      </button>
     </div>
   );
 };
+
 export default Profile;

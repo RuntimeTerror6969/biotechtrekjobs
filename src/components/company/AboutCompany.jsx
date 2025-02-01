@@ -2,8 +2,8 @@ import React from "react";
 
 const AboutCompany = () => {
   return (
-    <div className="pt-20 max-w-6xl mx-auto px-4 py-8 min-h-screen dark:bg-gray-900 dark:text-white">
-      <h1 className="text-3xl font-bold mb-6">About BioTechTrek</h1>
+    <div className="max-w-6xl mx-auto px-4 py-8 min-h-screen dark:bg-gray-900 dark:text-white">
+      <h1 className="mt-16 text-3xl font-bold mb-6">About BioTechTrek</h1>
 
       <p className="mb-6">
         At <strong>BioTechTrek</strong>, we are dedicated to providing

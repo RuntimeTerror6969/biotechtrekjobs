@@ -44,12 +44,16 @@
 // export const useAuth = () => useContext(AuthContext);
 import { createContext, useContext, useState, useEffect } from "react";
 import api from "../services/api";
+import { useNavigate } from "react-router-dom";
+
 
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const navigate =useNavigate();
+
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -98,6 +102,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("token");
     localStorage.removeItem("userInfo");
     setUser(null);
+    navigate("/");
   };
 
   return (
