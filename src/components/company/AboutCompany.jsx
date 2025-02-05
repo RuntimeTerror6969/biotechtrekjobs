@@ -42,7 +42,7 @@ const AboutCompany = () => {
       </p>
 
       <p className="mb-6">
-        At <strong>BiotechTrek Jobs</strong>, we understand the unique demands
+        At <strong>BioTechTrek Jobs</strong>, we understand the unique demands
         of the biotech and life sciences industries. That's why we've created a
         dedicated space where individuals can easily discover and apply for jobs
         that match their expertise, and employers can effortlessly post job
