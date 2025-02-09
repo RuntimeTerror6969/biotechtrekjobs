@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 
 const JobApplication = () => {
@@ -11,7 +11,7 @@ const JobApplication = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    resume: null,
+    resume: "", // Now a string URL instead of a file object
   });
 
   const handleInputChange = (e) => {
@@ -21,32 +21,21 @@ const JobApplication = () => {
     });
   };
 
-  const handleFileChange = (e) => {
-    setFormData({
-      ...formData,
-      resume: e.target.files[0],
-    });
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError("");
-
-    const submitData = new FormData();
-    submitData.append("name", formData.name);
-    submitData.append("email", formData.email);
-    submitData.append("resume", formData.resume);
 
     try {
       const response = await fetch(
         `https://bio-backend-kappa.vercel.app/api/applications/apply-job/${jobId}`,
         {
           method: "POST",
-          body: submitData,
           headers: {
+            "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
+          body: JSON.stringify(formData),
         }
       );
 
@@ -75,7 +64,7 @@ const JobApplication = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-6 ">
+    <div className="max-w-4xl mx-auto p-6">
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 space-y-8">
         <h2 className="text-3xl font-bold mb-6 dark:text-white">
           Apply for {job.title}
@@ -191,17 +180,19 @@ const JobApplication = () => {
 
               <div>
                 <label className="block text-gray-700 dark:text-gray-300 mb-2">
-                  Resume
+                  Resume (Google Drive Link)
                 </label>
                 <input
-                  type="file"
-                  onChange={handleFileChange}
-                  accept=".pdf,.doc,.docx"
+                  type="url"
+                  name="resume"
+                  value={formData.resume}
+                  onChange={handleInputChange}
                   required
+                  placeholder="Enter your Google Drive resume link"
                   className="w-full p-2 border rounded-md dark:border-gray-600"
                 />
                 <p className="text-sm text-gray-500 mt-1">
-                  Accepted formats: PDF, DOC, DOCX
+                  Please provide a link to your resume on Google Drive.
                 </p>
               </div>
             </div>
