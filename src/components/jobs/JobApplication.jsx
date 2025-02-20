@@ -11,7 +11,7 @@ const JobApplication = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    resume: "", // Now a string URL instead of a file object
+    resume: "", 
   });
 
   const handleInputChange = (e) => {
@@ -64,7 +64,7 @@ const JobApplication = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
+    <div className="max-w-4xl mx-auto p-20">
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 space-y-8">
         <h2 className="text-3xl font-bold mb-6 dark:text-white">
           Apply for {job.title}

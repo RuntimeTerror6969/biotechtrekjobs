@@ -32,13 +32,14 @@ const Navbar = () => {
           {/* Center Section - Logo */}
          
 <div className="flex items-center md:justify-center">
-  <Link to="/" className="px-1 pt-2 md:px-4">
-    <img 
-      src={darkMode ? darkLogo : logo} 
-      alt="BioTechTrek" 
-      className="h-12 w-22 md:h-16 md:w-36 lg:h-16 lg:w-72"
-    />
-  </Link>
+<Link to="/" className="px-1 pt-2 md:px-4">
+  <img 
+    src={darkMode ? darkLogo : logo} 
+    alt="BioTechTrek" 
+    className={`h-12 w-22 md:h-16 md:w-36 ${darkMode ? "h-28 w-18 pb-2 lg:h-28 lg:w-80" : "lg:h-16 lg:w-72"}`}
+  />
+</Link>
+
 </div>
 
 {/* Right Section - Actions */}

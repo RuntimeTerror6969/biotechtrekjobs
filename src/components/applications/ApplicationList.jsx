@@ -83,7 +83,7 @@ const ApplicationList = () => {
                   {app.job?.companyName}
                 </p>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Applied: {new Date(app.createdAt).toLocaleDateString()}
+                  Applied: {app.appliedDate ? new Date(app.appliedDate).toLocaleDateString() : 'Date not available'}
                 </p>
               </div>
               <div>

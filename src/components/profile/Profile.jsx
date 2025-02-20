@@ -151,32 +151,32 @@ const Profile = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
         {/* Back button */}
         <button 
           onClick={() => navigate("/")} 
-          className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6"
+          className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-4 sm:mb-6"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to Dashboard</span>
         </button>
         
-        <div className="bg-white rounded-lg shadow-lg overflow-hidden h-[calc(100vh-8rem)]">
+        <div className="bg-white rounded-lg shadow-lg overflow-hidden h-[calc(100vh-4rem)] sm:h-[calc(100vh-8rem)]">
           {/* Profile Header */}
-          <div className="bg-gradient-to-r from-blue-600 to-blue-800 px-8 py-6">
-            <div className="flex items-center justify-between">
+          <div className="bg-gradient-to-r from-blue-600 to-blue-800 px-4 sm:px-8 py-4 sm:py-6">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-0">
               <div className="flex items-center">
-                <div className="bg-white rounded-full p-3 mr-4 shadow-md">
-                  <User className="w-10 h-10 text-blue-600" />
+                <div className="bg-white rounded-full p-2 sm:p-3 mr-3 sm:mr-4 shadow-md">
+                  <User className="w-8 h-8 sm:w-10 sm:h-10 text-blue-600" />
                 </div>
                 <div>
-                  <h1 className="text-2xl font-bold text-white">{profile.fullName || "Your Profile"}</h1>
-                  <p className="text-blue-100">{profile.email || "Email not available"}</p>
+                  <h1 className="text-xl sm:text-2xl font-bold text-white">{profile.fullName || "Your Profile"}</h1>
+                  <p className="text-blue-100 text-sm sm:text-base">{profile.email || "Email not available"}</p>
                 </div>
               </div>
               <button
                 onClick={handleLogout}
-                className="flex items-center gap-2 bg-white text-red-600 hover:bg-gray-100 px-4 py-2 rounded-md font-medium transition-colors shadow-sm"
+                className="flex items-center gap-2 bg-white text-red-600 hover:bg-gray-100 px-3 sm:px-4 py-2 rounded-md font-medium transition-colors shadow-sm text-sm sm:text-base"
               >
                 <LogOut className="w-4 h-4" />
                 <span>Logout</span>
@@ -189,26 +189,27 @@ const Profile = () => {
             <nav className="flex" aria-label="Tabs">
               <button
                 onClick={() => setActiveTab("personalInfo")}
-                className={`w-1/2 py-4 px-1 text-center border-b-2 font-medium text-sm ${
+                className={`w-1/2 py-3 sm:py-4 px-1 text-center border-b-2 font-medium text-sm ${
                   activeTab === "personalInfo"
                     ? "border-blue-500 text-blue-600"
                     : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
                 }`}
               >
-                <div className="flex items-center justify-center gap-2">
+                <div className="flex items-center justify-center gap-1 sm:gap-2">
                   <User className="w-4 h-4" />
-                  <span>Personal Information</span>
+                  <span className="hidden sm:inline">Personal Information</span>
+                  <span className="sm:hidden">Personal</span>
                 </div>
               </button>
               <button
                 onClick={() => setActiveTab("security")}
-                className={`w-1/2 py-4 px-1 text-center border-b-2 font-medium text-sm ${
+                className={`w-1/2 py-3 sm:py-4 px-1 text-center border-b-2 font-medium text-sm ${
                   activeTab === "security"
                     ? "border-blue-500 text-blue-600"
                     : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
                 }`}
               >
-                <div className="flex items-center justify-center gap-2">
+                <div className="flex items-center justify-center gap-1 sm:gap-2">
                   <Lock className="w-4 h-4" />
                   <span>Security</span>
                 </div>
@@ -218,22 +219,22 @@ const Profile = () => {
           
           {/* Status Messages */}
           {error && (
-            <div className="m-6 p-4 bg-red-50 text-red-700 rounded-md border border-red-200">
+            <div className="mx-4 sm:mx-6 mt-4 p-3 sm:p-4 bg-red-50 text-red-700 rounded-md border border-red-200 text-sm sm:text-base">
               {error}
             </div>
           )}
           
           {success && (
-            <div className="m-6 p-4 bg-green-50 text-green-700 rounded-md border border-green-200">
+            <div className="mx-4 sm:mx-6 mt-4 p-3 sm:p-4 bg-green-50 text-green-700 rounded-md border border-green-200 text-sm sm:text-base">
               {success}
             </div>
           )}
           
           {/* Content */}
-          <div className="p-8 overflow-y-auto h-[calc(100%-13rem)]">
+          <div className="p-4 sm:p-8 overflow-y-auto h-[calc(100%-13rem)]">
             {activeTab === "personalInfo" && (
-              <form onSubmit={handleProfileUpdate} className="max-w-3xl mx-auto space-y-6">
-                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+              <form onSubmit={handleProfileUpdate} className="max-w-3xl mx-auto space-y-4 sm:space-y-6">
+                <div className="grid grid-cols-1 gap-4 sm:gap-6">
                   <div>
                     <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-1">
                       <User className="w-4 h-4" />
@@ -296,7 +297,7 @@ const Profile = () => {
                   <button
                     type="submit"
                     disabled={isSaving}
-                    className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md font-medium transition-colors duration-200 disabled:opacity-50"
+                    className="w-full sm:w-auto flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md font-medium transition-colors duration-200 disabled:opacity-50"
                   >
                     {isSaving ? (
                       <>
@@ -315,7 +316,7 @@ const Profile = () => {
             )}
 
             {activeTab === "security" && (
-              <form onSubmit={handlePasswordChange} className="max-w-2xl mx-auto space-y-6">
+              <form onSubmit={handlePasswordChange} className="max-w-2xl mx-auto space-y-4 sm:space-y-6">
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -364,7 +365,7 @@ const Profile = () => {
                   <button
                     type="submit"
                     disabled={isSaving}
-                    className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md font-medium transition-colors duration-200 disabled:opacity-50"
+                    className="w-full sm:w-auto flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md font-medium transition-colors duration-200 disabled:opacity-50"
                   >
                     {isSaving ? (
                       <>
