@@ -129,7 +129,7 @@ const AddJobs = () => {
           {/* Company Name */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Company Name *
+              Company Name 
             </label>
             <input
               type="text"
@@ -180,12 +180,11 @@ const AddJobs = () => {
           {/* Skills Required */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Skills Required *
+              Skills Required 
             </label>
             <input
               type="text"
               name="skillsRequired"
-              required
               value={formData.skillsRequired}
               onChange={handleChange}
               placeholder="e.g., JavaScript, React, Node.js"
@@ -265,7 +264,7 @@ const AddJobs = () => {
           {/* Apply Link */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Apply Link *
+              Apply Link 
             </label>
             <input
               type="url"
