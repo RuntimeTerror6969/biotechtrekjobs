@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, Link, useLocation } from "react-router-dom";  // Import useLocation
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import axios from "axios";
 
 const AddJobs = () => {
@@ -52,7 +52,7 @@ const AddJobs = () => {
     };
 
     fetchCategories();
-  }, [location.state]);  // Dependency array to ensure it runs when location changes
+  }, [location.state]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -111,7 +111,6 @@ const AddJobs = () => {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4 mt-6">
-          {/* Job Title */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
               Job Title *
@@ -122,11 +121,10 @@ const AddJobs = () => {
               required
               value={formData.title}
               onChange={handleChange}
-              className="w-full mt-1 px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              className="w-full mt-1 px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white dark:border-gray-600"
             />
           </div>
 
-          {/* Company Name */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
               Company Name 
@@ -137,11 +135,10 @@ const AddJobs = () => {
               required
               value={formData.companyName}
               onChange={handleChange}
-              className="w-full mt-1 px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              className="w-full mt-1 px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white dark:border-gray-600"
             />
           </div>
 
-          {/* Description */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
               Description *
@@ -152,11 +149,10 @@ const AddJobs = () => {
               value={formData.description}
               onChange={handleChange}
               rows="4"
-              className="w-full mt-1 px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              className="w-full mt-1 px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white dark:border-gray-600"
             />
           </div>
 
-          {/* Category */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
               Job Category *
@@ -166,7 +162,7 @@ const AddJobs = () => {
               value={formData.category}
               onChange={handleChange}
               required
-              className="w-full mt-1 px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              className="w-full mt-1 px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white dark:border-gray-600"
             >
               <option value="">Select Category</option>
               {categories.map((cat) => (
@@ -177,7 +173,6 @@ const AddJobs = () => {
             </select>
           </div>
 
-          {/* Skills Required */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
               Skills Required 
@@ -188,50 +183,47 @@ const AddJobs = () => {
               value={formData.skillsRequired}
               onChange={handleChange}
               placeholder="e.g., JavaScript, React, Node.js"
-              className="w-full mt-1 px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              className="w-full mt-1 px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white dark:border-gray-600"
             />
           </div>
 
-          {/* Employment Type */}
           <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-            Employment Type *
-          </label>
-          <select
-            name="employmentType"
-            value={formData.employmentType}
-            onChange={handleChange}
-            className="w-full mt-1 px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-          >
-            <option value="full-time">Full-Time</option>
-            <option value="part-time">Part-Time</option>
-            <option value="internship">Internship</option>
-            <option value="any">Any</option>
-          </select>
-        </div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              Employment Type *
+            </label>
+            <select
+              name="employmentType"
+              value={formData.employmentType}
+              onChange={handleChange}
+              className="w-full mt-1 px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white dark:border-gray-600"
+            >
+              <option value="full-time">Full-Time</option>
+              <option value="part-time">Part-Time</option>
+              <option value="internship">Internship</option>
+              <option value="any">Any</option>
+            </select>
+          </div>
 
-          {/* Work Experience */}
           <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-            Work Experience *
-          </label>
-          <select
-            name="workExperience"
-            value={formData.workExperience}
-            onChange={handleChange}
-            required
-            className="w-full mt-1 px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-          >
-            <option value="0-1 years">0-1 years</option>
-            <option value="1-3 years">1-3 years</option>
-            <option value="3-5 years">3-5 years</option>
-            <option value="5 years">5 years</option>
-            <option value="more than 5 years">More than 5 years</option>
-            <option value="Any">Any</option>
-          </select>
-        </div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              Work Experience *
+            </label>
+            <select
+              name="workExperience"
+              value={formData.workExperience}
+              onChange={handleChange}
+              required
+              className="w-full mt-1 px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white dark:border-gray-600"
+            >
+              <option value="0-1 years">0-1 years</option>
+              <option value="1-3 years">1-3 years</option>
+              <option value="3-5 years">3-5 years</option>
+              <option value="5 years">5 years</option>
+              <option value="more than 5 years">More than 5 years</option>
+              <option value="Any">Any</option>
+            </select>
+          </div>
 
-          {/* Location */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
               Location *
@@ -242,11 +234,10 @@ const AddJobs = () => {
               required
               value={formData.location}
               onChange={handleChange}
-              className="w-full mt-1 px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              className="w-full mt-1 px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white dark:border-gray-600"
             />
           </div>
 
-          {/* Salary */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
               Salary
@@ -257,11 +248,10 @@ const AddJobs = () => {
               value={formData.salary}
               onChange={handleChange}
               placeholder="e.g., 50000"
-              className="w-full mt-1 px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              className="w-full mt-1 px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white dark:border-gray-600"
             />
           </div>
 
-          {/* Apply Link */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
               Apply Link 
@@ -272,11 +262,10 @@ const AddJobs = () => {
               value={formData.applyLink}
               onChange={handleChange}
               placeholder="Enter the application link"
-              className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 p-2 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              className="w-full mt-1 px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white dark:border-gray-600"
             />
           </div>
 
-          {/* Buttons */}
           <div className="flex justify-between items-center mt-6">
             <button
               type="submit"
