@@ -74,7 +74,7 @@ const JobCard = ({ job }) => {
         <p className="text-gray-600 dark:text-gray-300 text-sm md:text-base mb-2">{job.companyName}</p>
         <div className="flex flex-wrap items-center text-sm md:text-base gap-3 mb-2 text-gray-500 dark:text-gray-400">
           <span>📍 {job.location}</span>
-          <span>💰 ${job.salary}</span>
+          <span>₹ {job.salary}</span>
         </div>
         <p className="text-sm md:text-base dark:text-gray-300 mb-4">{job.description}</p>
 
