@@ -95,6 +95,8 @@ import Footer from "./components/layout/Footer";
 import Layout from "./components/layout/Layout";
 import AddJobs from "./components/jobs/AddJobs";
 import JobApplication from "./components/jobs/JobApplication";
+import Contactus from "./components/company/Contactus";
+import AdminTickets from "./components/profile/AdminTickets";
 
 const App = () => {
   return (
@@ -131,6 +133,14 @@ const App = () => {
                   </ProtectedRoute>
                 }
               />
+              <Route
+                path="/tickets"
+                element={
+                  <ProtectedRoute roles={["admin"]}>
+                    <AdminTickets/>
+                  </ProtectedRoute>
+                }
+              />
 
               <Route
                 path="/applications"
@@ -163,7 +173,10 @@ const App = () => {
                   </ProtectedRoute>
                 }
               />
+              <Route path="/contactus" element={<Contactus />} />
+
             </Routes>
+
             <Footer />
           </div>
         </ThemeProvider>

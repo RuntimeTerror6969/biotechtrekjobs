@@ -6,6 +6,7 @@ import { Moon, Sun, Menu, X, User } from "lucide-react";
 import logo from "../../assets/biotechtreklogo.jpg";
 import darkLogo from "../../assets/btt white logo.png";
 import { BriefcaseBusiness } from "lucide-react";
+import ContactModal from "./ContactModal";
 
 const Navbar = () => {
   const { user } = useAuth();
@@ -14,6 +15,11 @@ const Navbar = () => {
 
   const isAdmin = user?.role === "admin";
   const closeMenu = () => setIsOpen(false);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   return (
     <nav className={`bg-white ${darkMode ? "dark:bg-gray-800" : ""} shadow-lg fixed w-full z-50 transition-colors duration-200`}>
@@ -120,7 +126,7 @@ const Navbar = () => {
                     onClick={closeMenu}
                   >
                     <div className="flex items-center gap-1.5">
-                      <BriefcaseBusiness className="w-4 h-4" />
+                      {/* <BriefcaseBusiness className="w-4 h-4" /> */}
                       <span>My Applications</span>
                     </div>
                   </Link>
@@ -134,19 +140,25 @@ const Navbar = () => {
                   About Us
                 </Link>
 
-                <Link
+                <button onClick={openModal} className="block px-3 py-2 text-l rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 dark:text-gray-200">
+                  Support
+                </button>
+
+                {/* <Link
                   to="/contact"
                   className="block px-3 py-2 text-l rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 dark:text-gray-200"
                   onClick={closeMenu}
                 >
                   Contact Us
-                </Link>
+                </Link> */}
               </>
             )}
+             <ContactModal isOpen={isModalOpen} onClose={closeModal} />
           </div>
         </div>
       </div>
     </nav>
+    
   );
 };
 

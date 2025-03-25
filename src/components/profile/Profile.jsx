@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
-import { LogOut, User, Phone, Code, Loader2, Mail, Lock, Save, ArrowLeft } from "lucide-react";
+import { LogOut, User, Phone, Code, Loader2, Mail, Lock, Save, ArrowLeft, Ticket } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
@@ -22,9 +22,12 @@ const Profile = () => {
     newPassword: "",
     confirmPassword: "",
   });
+  const [tickets, setTickets] = useState([]);
+  const [ticketsLoading, setTicketsLoading] = useState(false);
+  const [ticketsError, setTicketsError] = useState(null);
 
   useEffect(() => {
-    if (!localStorage.getItem('token')) {
+    if (!localStorage.getItem("token")) {
       navigate("/auth");
       return;
     }
@@ -34,14 +37,14 @@ const Profile = () => {
   const fetchUserProfile = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch('https://bio-backend-kappa.vercel.app/api/profile/view-profile', {
+      const response = await fetch("https://bio-backend-kappa.vercel.app/api/profile/view-profile", {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
+          "Authorization": `Bearer ${localStorage.getItem("token")}`,
+        },
       });
-      
-      if (!response.ok) throw new Error('Failed to fetch profile');
-      
+
+      if (!response.ok) throw new Error("Failed to fetch profile");
+
       const data = await response.json();
       setProfile({
         fullName: data.name || "",
@@ -56,30 +59,55 @@ const Profile = () => {
     }
   };
 
+  const fetchTickets = async () => {
+    try {
+      setTicketsLoading(true);
+      setTicketsError(null);
+      const response = await fetch("https://bio-backend-kappa.vercel.app/api/profile/tickets", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.msg || "Failed to fetch tickets");
+      }
+
+      const data = await response.json();
+      setTickets(data);
+    } catch (err) {
+      setTicketsError(err.message);
+    } finally {
+      setTicketsLoading(false);
+    }
+  };
 
   const handleProfileUpdate = async (e) => {
     e.preventDefault();
     setError(null);
     setSuccess(null);
-    
+
     try {
       setIsSaving(true);
-      const response = await fetch('https://bio-backend-kappa.vercel.app/api/profile/update-profile', {
-        method: 'PUT',
+      const response = await fetch("https://bio-backend-kappa.vercel.app/api/profile/update-profile", {
+        method: "PUT",
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("token")}`,
         },
         body: JSON.stringify({
           name: profile.fullName,
           email: profile.email,
           phone: profile.phone,
-          skills:profile.skills
-        })
+          skills: profile.skills,
+        }),
       });
-      
-      if (!response.ok) throw new Error('Failed to update profile');
-      
+
+      if (!response.ok) throw new Error("Failed to update profile");
+
       setSuccess("Profile updated successfully");
       setTimeout(() => setSuccess(null), 3000);
     } catch (err) {
@@ -93,37 +121,36 @@ const Profile = () => {
     e.preventDefault();
     setError(null);
     setSuccess(null);
-    
-    // Validate passwords
+
     if (passwordData.newPassword !== passwordData.confirmPassword) {
       setError("New passwords don't match");
       return;
     }
-    
+
     try {
       setIsSaving(true);
-      const response = await fetch('https://bio-backend-kappa.vercel.app/api/profile/change-password', {
-        method: 'PUT',
+      const response = await fetch("https://bio-backend-kappa.vercel.app/api/profile/change-password", {
+        method: "PUT",
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("token")}`,
         },
         body: JSON.stringify({
           oldPassword: passwordData.oldPassword,
-          newPassword: passwordData.newPassword
-        })
+          newPassword: passwordData.newPassword,
+        }),
       });
-      
+
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.msg || 'Failed to change password');
+        throw new Error(errorData.msg || "Failed to change password");
       }
-      
+
       setSuccess("Password changed successfully");
       setPasswordData({
         oldPassword: "",
         newPassword: "",
-        confirmPassword: ""
+        confirmPassword: "",
       });
       setTimeout(() => setSuccess(null), 3000);
     } catch (err) {
@@ -137,6 +164,12 @@ const Profile = () => {
     logout();
     navigate("/auth");
   };
+
+  useEffect(() => {
+    if (activeTab === "tickets" && user.role === "admin") {
+      fetchTickets();
+    }
+  }, [activeTab, user.role]);
 
   if (isLoading) {
     return (
@@ -152,15 +185,14 @@ const Profile = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
-        {/* Back button */}
-        <button 
-          onClick={() => navigate("/")} 
+        <button
+          onClick={() => navigate("/")}
           className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-4 sm:mb-6"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to Dashboard</span>
         </button>
-        
+
         <div className="bg-white rounded-lg shadow-lg overflow-hidden h-[calc(100vh-4rem)] sm:h-[calc(100vh-8rem)]">
           {/* Profile Header */}
           <div className="bg-gradient-to-r from-blue-600 to-blue-800 px-4 sm:px-8 py-4 sm:py-6">
@@ -183,13 +215,13 @@ const Profile = () => {
               </button>
             </div>
           </div>
-          
+
           {/* Tabs */}
           <div className="border-b border-gray-200">
             <nav className="flex" aria-label="Tabs">
               <button
                 onClick={() => setActiveTab("personalInfo")}
-                className={`w-1/2 py-3 sm:py-4 px-1 text-center border-b-2 font-medium text-sm ${
+                className={`w-1/${user.role === "admin" ? "3" : "2"} py-3 sm:py-4 px-1 text-center border-b-2 font-medium text-sm ${
                   activeTab === "personalInfo"
                     ? "border-blue-500 text-blue-600"
                     : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
@@ -203,7 +235,7 @@ const Profile = () => {
               </button>
               <button
                 onClick={() => setActiveTab("security")}
-                className={`w-1/2 py-3 sm:py-4 px-1 text-center border-b-2 font-medium text-sm ${
+                className={`w-1/${user.role === "admin" ? "3" : "2"} py-3 sm:py-4 px-1 text-center border-b-2 font-medium text-sm ${
                   activeTab === "security"
                     ? "border-blue-500 text-blue-600"
                     : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
@@ -214,22 +246,41 @@ const Profile = () => {
                   <span>Security</span>
                 </div>
               </button>
+              {user.role === "admin" && (
+                <button
+                  onClick={() => setActiveTab("tickets")}
+                  className={`w-1/3 py-3 sm:py-4 px-1 text-center border-b-2 font-medium text-sm ${
+                    activeTab === "tickets"
+                      ? "border-blue-500 text-blue-600"
+                      : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                  }`}
+                >
+                  <div className="flex items-center justify-center gap-1 sm:gap-2">
+                    <Ticket className="w-4 h-4" />
+                    <span>Tickets</span>
+                  </div>
+                </button>
+              )}
             </nav>
           </div>
-          
+
           {/* Status Messages */}
           {error && (
             <div className="mx-4 sm:mx-6 mt-4 p-3 sm:p-4 bg-red-50 text-red-700 rounded-md border border-red-200 text-sm sm:text-base">
               {error}
             </div>
           )}
-          
           {success && (
             <div className="mx-4 sm:mx-6 mt-4 p-3 sm:p-4 bg-green-50 text-green-700 rounded-md border border-green-200 text-sm sm:text-base">
               {success}
             </div>
           )}
-          
+          {ticketsError && activeTab === "tickets" && (
+            <div className="mx-4 sm:mx-6 mt-4 p-3 sm:p-4 bg-red-50 text-red-700 rounded-md border border-red-200 text-sm sm:text-base">
+              {ticketsError}
+            </div>
+          )}
+
           {/* Content */}
           <div className="p-4 sm:p-8 overflow-y-auto h-[calc(100%-13rem)]">
             {activeTab === "personalInfo" && (
@@ -331,7 +382,7 @@ const Profile = () => {
                       required
                     />
                   </div>
-                  
+
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                       New Password
@@ -345,7 +396,7 @@ const Profile = () => {
                       required
                     />
                   </div>
-                  
+
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                       Confirm New Password
@@ -381,6 +432,40 @@ const Profile = () => {
                   </button>
                 </div>
               </form>
+            )}
+
+            {activeTab === "tickets" && user.role === "admin" && (
+              <div className="max-w-4xl mx-auto">
+                <h2 className="text-xl font-semibold mb-4">Support Tickets</h2>
+                {ticketsLoading ? (
+                  <div className="text-center">
+                    <Loader2 className="w-8 h-8 animate-spin text-blue-500 mx-auto mb-4" />
+                    <p className="text-gray-600">Loading tickets...</p>
+                  </div>
+                ) : tickets.length === 0 ? (
+                  <p className="text-gray-600">No tickets found.</p>
+                ) : (
+                  <ul className="space-y-4">
+                    {tickets.map((ticket) => (
+                      <li key={ticket._id} className="p-4 border rounded-md shadow-sm bg-gray-50">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                          <p><strong>Name:</strong> {ticket.name}</p>
+                          <p><strong>Email:</strong> {ticket.email}</p>
+                          <p><strong>Phone:</strong> {ticket.phone}</p>
+                          <p><strong>Topic:</strong> {ticket.topic}</p>
+                          <p className="sm:col-span-2"><strong>Feedback:</strong> {ticket.feedback}</p>
+                          <p className="sm:col-span-2">
+                            <strong>Created:</strong> {new Date(ticket.createdAt).toLocaleString()}
+                          </p>
+                          {ticket.userId && (
+                            <p className="sm:col-span-2"><strong>User ID:</strong> {ticket.userId}</p>
+                          )}
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
             )}
           </div>
         </div>
