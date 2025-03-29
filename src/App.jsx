@@ -97,6 +97,8 @@ import AddJobs from "./components/jobs/AddJobs";
 import JobApplication from "./components/jobs/JobApplication";
 import Contactus from "./components/company/Contactus";
 import AdminTickets from "./components/profile/AdminTickets";
+import PrivacyPolicy from "./components/company/PrivacyPolicy";
+import FAQs from "./components/company/FAQs";
 
 const App = () => {
   return (
@@ -164,6 +166,8 @@ const App = () => {
               <Route path="/company" element={<AboutCompany />} />
               <Route path="/terms" element={<TermsAndConditions />} />
               {/* <Route path="/applications" element={<ApplicationList />} /> */}
+              <Route path= "/privacy" element={<PrivacyPolicy/>}/>
+              <Route path="/faq" element={<FAQs />} />
               <Route path="/about" element={<AboutCompany />} />
               <Route
                 path="/apply-job/:jobId"
