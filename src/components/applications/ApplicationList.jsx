@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-
+import { API_BASE_URL } from "../../config/api";
 const ApplicationList = () => {
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -14,7 +14,7 @@ const ApplicationList = () => {
   const fetchApplications = async () => {
     try {
       const response = await fetch(
-        "https://bio-backend-kappa.vercel.app/api/applications/my-applications",
+        `${API_BASE_URL}/applications/my-applications`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -87,8 +87,13 @@ const ApplicationList = () => {
                 </p>
               </div>
               <div>
-                <span className="px-3 py-1 rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">
-                  Under Review
+                <span className={`px-3 py-1 rounded-full ${
+                  app.status === 'pending' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' :
+                  app.status === 'accepted' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' :
+                  app.status === 'rejected' ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200' :
+                  'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
+                }`}>
+                  {app.status.charAt(0).toUpperCase() + app.status.slice(1)}
                 </span>
               </div>
             </div>

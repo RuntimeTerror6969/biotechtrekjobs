@@ -88,6 +88,8 @@ import JobList from "./components/jobs/JobList";
 import Profile from "./components/profile/Profile";
 import Navbar from "./components/layout/Navbar";
 import ApplicationList from "./components/applications/ApplicationList";
+import EmployerApplications from "./components/applications/EmployerApplications";
+import AdminApplications from "./components/applications/AdminApplications";
 import { ThemeProvider } from "./context/ThemeContext";
 import AboutCompany from "./components/company/AboutCompany";
 import TermsAndConditions from "./components/company/TermsAndConditions";
@@ -142,9 +144,27 @@ const App = () => {
               />
 
               <Route
+                path="/employer-applications"
+                element={
+                  <ProtectedRoute roles={["employer"]}>
+                    <EmployerApplications />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/admin-applications"
+                element={
+                  <ProtectedRoute roles={["admin"]}>
+                    <AdminApplications />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
                 path="/profile"
                 element={
-                  <ProtectedRoute roles={["employer", "candidate", "admin"]}>
+                  <ProtectedRoute roles={["candidate", "admin"]}>
                     <Profile />
                   </ProtectedRoute>
                 }
@@ -153,7 +173,6 @@ const App = () => {
               <Route path="/" element={<JobList />} />
               <Route path="/company" element={<AboutCompany />} />
               <Route path="/terms" element={<TermsAndConditions />} />
-              {/* <Route path="/applications" element={<ApplicationList />} /> */}
               <Route path="/about" element={<AboutCompany />} />
               <Route
                 path="/apply-job/:jobId"
