@@ -156,7 +156,7 @@ const TermsAndConditions = () => {
           href="mailto:contact@biotechtrek.com"
           className="text-blue-500 hover:underline"
         >
-          contact@biotechtrek.com
+          Biotechtrek.help@gmail.com
         </a>
       </p>
     </div>

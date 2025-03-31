@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import ContactModal from "./ContactModal";
+//import Contactus from "../company/Contactus";
 
 const Footer = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -21,13 +22,13 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/support" className="hover:text-gray-300">
-                  Support
+                <Link to="/contactus" className="hover:text-gray-300">
+                  Contact Us
                 </Link>
               </li>
               <li>
                 <button onClick={openModal} className="hover:text-gray-300">
-                  Contact Us
+                  Support
                 </button>
               </li>
             </ul>
@@ -41,7 +42,7 @@ const Footer = () => {
                   Company
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link to="/team" className="hover:text-gray-300">
                   Team
                 </Link>
@@ -50,7 +51,7 @@ const Footer = () => {
                 <Link to="/careers" className="hover:text-gray-300">
                   Careers
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
 
@@ -67,11 +68,11 @@ const Footer = () => {
                   Terms of Service
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link to="/cookies" className="hover:text-gray-300">
                   Cookie Policy
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
 

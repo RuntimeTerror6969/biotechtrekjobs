@@ -20,28 +20,34 @@ const ContactModal = ({ isOpen, onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("/api/send-email", {
+      const token = localStorage.getItem("token"); // Retrieve token
+      const response = await fetch("https://bio-backend-kappa.vercel.app/api/profile/tickets", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`, // Add token to headers
         },
         body: JSON.stringify(formData),
       });
 
       if (response.ok) {
         alert("Ticket raised successfully!");
+        setFormData({ name: "", email: "", phone: "", topic: "", feedback: "" });
         onClose();
       } else {
-        alert("Failed to raise ticket. Please try again.");
+        const errorData = await response.json();
+        console.error("Server response:", errorData);
+        alert(errorData.msg || "Failed to raise ticket. Please try again.");
       }
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error submitting ticket:", error);
       alert("An error occurred. Please try again.");
     }
   };
 
   if (!isOpen) return null;
 
+  // JSX form remains the same
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto">
       <div className="fixed inset-0 bg-black bg-opacity-50" onClick={onClose} />
@@ -50,10 +56,7 @@ const ContactModal = ({ isOpen, onClose }) => {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-4">
             <div>
-              <label
-                htmlFor="name"
-                className="block text-sm font-medium text-gray-700 mb-1"
-              >
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
                 Your Name
               </label>
               <input
@@ -66,12 +69,8 @@ const ContactModal = ({ isOpen, onClose }) => {
                 required
               />
             </div>
-
             <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-700 mb-1"
-              >
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
                 Your Email
               </label>
               <input
@@ -84,12 +83,8 @@ const ContactModal = ({ isOpen, onClose }) => {
                 required
               />
             </div>
-
             <div>
-              <label
-                htmlFor="phone"
-                className="block text-sm font-medium text-gray-700 mb-1"
-              >
+              <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
                 Your Phone
               </label>
               <input
@@ -102,12 +97,8 @@ const ContactModal = ({ isOpen, onClose }) => {
                 required
               />
             </div>
-
             <div>
-              <label
-                htmlFor="topic"
-                className="block text-sm font-medium text-gray-700 mb-1"
-              >
+              <label htmlFor="topic" className="block text-sm font-medium text-gray-700 mb-1">
                 Topic of Concern
               </label>
               <input
@@ -120,12 +111,8 @@ const ContactModal = ({ isOpen, onClose }) => {
                 required
               />
             </div>
-
             <div>
-              <label
-                htmlFor="feedback"
-                className="block text-sm font-medium text-gray-700 mb-1"
-              >
+              <label htmlFor="feedback" className="block text-sm font-medium text-gray-700 mb-1">
                 Your Feedback
               </label>
               <textarea
@@ -139,7 +126,6 @@ const ContactModal = ({ isOpen, onClose }) => {
               />
             </div>
           </div>
-
           <div className="mt-6 flex justify-end space-x-4">
             <button
               type="button"

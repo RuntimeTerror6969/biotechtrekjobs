@@ -97,6 +97,10 @@ import Footer from "./components/layout/Footer";
 import Layout from "./components/layout/Layout";
 import AddJobs from "./components/jobs/AddJobs";
 import JobApplication from "./components/jobs/JobApplication";
+import Contactus from "./components/company/Contactus";
+import AdminTickets from "./components/profile/AdminTickets";
+import PrivacyPolicy from "./components/company/PrivacyPolicy";
+import FAQs from "./components/company/FAQs";
 
 const App = () => {
   return (
@@ -130,6 +134,14 @@ const App = () => {
                 element={
                   <ProtectedRoute roles={["admin"]}>
                     <AddJobs />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/tickets"
+                element={
+                  <ProtectedRoute roles={["admin"]}>
+                    <AdminTickets/>
                   </ProtectedRoute>
                 }
               />
@@ -173,6 +185,12 @@ const App = () => {
               <Route path="/" element={<JobList />} />
               <Route path="/company" element={<AboutCompany />} />
               <Route path="/terms" element={<TermsAndConditions />} />
+<<<<<<< HEAD
+=======
+              {/* <Route path="/applications" element={<ApplicationList />} /> */}
+              <Route path= "/privacy" element={<PrivacyPolicy/>}/>
+              <Route path="/faq" element={<FAQs />} />
+>>>>>>> b051b250a710cd84beba8b718cfc20d93acbd467
               <Route path="/about" element={<AboutCompany />} />
               <Route
                 path="/apply-job/:jobId"
@@ -182,7 +200,10 @@ const App = () => {
                   </ProtectedRoute>
                 }
               />
+              <Route path="/contactus" element={<Contactus />} />
+
             </Routes>
+
             <Footer />
           </div>
         </ThemeProvider>
