@@ -185,12 +185,8 @@ const App = () => {
               <Route path="/" element={<JobList />} />
               <Route path="/company" element={<AboutCompany />} />
               <Route path="/terms" element={<TermsAndConditions />} />
-<<<<<<< HEAD
-=======
-              {/* <Route path="/applications" element={<ApplicationList />} /> */}
-              <Route path= "/privacy" element={<PrivacyPolicy/>}/>
+              <Route path="/privacy" element={<PrivacyPolicy />} />
               <Route path="/faq" element={<FAQs />} />
->>>>>>> b051b250a710cd84beba8b718cfc20d93acbd467
               <Route path="/about" element={<AboutCompany />} />
               <Route
                 path="/apply-job/:jobId"
