@@ -5,24 +5,18 @@ import { useTheme } from "../../context/ThemeContext";
 import { Moon, Sun, Menu, X, User, BriefcaseBusiness, FileText } from "lucide-react";
 import logo from "../../assets/biotechtreklogo.jpg";
 import darkLogo from "../../assets/btt white logo.png";
-<<<<<<< HEAD
-=======
-import { BriefcaseBusiness } from "lucide-react";
 import ContactModal from "./ContactModal";
->>>>>>> b051b250a710cd84beba8b718cfc20d93acbd467
 
 const Navbar = () => {
   const { user } = useAuth();
   const { darkMode, toggleDarkMode } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const isAdmin = user?.role === "admin";
   const isEmployer = user?.role === "employer";
   const isCandidate = user?.role === "candidate";
   const closeMenu = () => setIsOpen(false);
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
@@ -131,11 +125,7 @@ const Navbar = () => {
                     onClick={closeMenu}
                   >
                     <div className="flex items-center gap-1.5">
-<<<<<<< HEAD
                       <FileText className="w-5 h-5" />
-=======
-                      {/* <BriefcaseBusiness className="w-4 h-4" /> */}
->>>>>>> b051b250a710cd84beba8b718cfc20d93acbd467
                       <span>My Applications</span>
                     </div>
                   </Link>
@@ -152,22 +142,13 @@ const Navbar = () => {
                 <button onClick={openModal} className="block px-3 py-2 text-l rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 dark:text-gray-200">
                   Support
                 </button>
-
-                {/* <Link
-                  to="/contact"
-                  className="block px-3 py-2 text-l rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 dark:text-gray-200"
-                  onClick={closeMenu}
-                >
-                  Contact Us
-                </Link> */}
               </>
             )}
-             <ContactModal isOpen={isModalOpen} onClose={closeModal} />
+            <ContactModal isOpen={isModalOpen} onClose={closeModal} />
           </div>
         </div>
       </div>
     </nav>
-    
   );
 };
 
