@@ -118,22 +118,6 @@ const AuthForm = () => {
                 required
               />
             </div>
-            <div className="mb-4">
-              <label className="block mb-2">Role</label>
-              <select
-                value={formData.role}
-                onChange={(e) =>
-                  setFormData({ ...formData, role: e.target.value })
-                }
-                className={`w-full p-2 border rounded ${
-                  darkMode ? "bg-gray-700 text-white" : "bg-white text-gray-800"
-                }`}
-                required
-              >
-                <option value="candidate">Candidate</option>
-                <option value="admin">Admin</option>
-              </select>
-            </div>
           </>
         )}
         <button
@@ -147,15 +131,28 @@ const AuthForm = () => {
           {isRegistering ? "Register" : "Login"}
         </button>
       </form>
-      <p className="mt-4 text-center">
-        {isRegistering ? "Already have an account?" : "Don't have an account?"}{" "}
-        <button
-          onClick={() => setIsRegistering(!isRegistering)}
-          className="text-blue-500 hover:underline"
-        >
-          {isRegistering ? "Login" : "Register"}
-        </button>
-      </p>
+      <div className="mt-4 text-center space-y-2">
+        <p>
+          {isRegistering ? "Already have an account?" : "Don't have an account?"}{" "}
+          <button
+            onClick={() => setIsRegistering(!isRegistering)}
+            className="text-blue-500 hover:underline"
+          >
+            {isRegistering ? "Login" : "Register"}
+          </button>
+        </p>
+        {!isRegistering && (
+          <p>
+            Forgot your password?{" "}
+            <button
+              onClick={() => navigate("/forgot-password")}
+              className="text-blue-500 hover:underline"
+            >
+              Reset Password
+            </button>
+          </p>
+        )}
+      </div>
     </div>
   );
 };
