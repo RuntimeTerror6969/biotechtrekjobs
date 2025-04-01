@@ -108,6 +108,14 @@ const AdminApplications = () => {
                   <p className="text-sm text-gray-500 dark:text-gray-400">
                     Applied: {new Date(app.appliedDate).toLocaleDateString()}
                   </p>
+                  <a 
+                    href={app.resume} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 text-sm mt-2 inline-block"
+                  >
+                    View Resume
+                  </a>
                 </div>
                 <div className="flex flex-col items-end space-y-2">
                   <span className={`px-3 py-1 rounded-full ${

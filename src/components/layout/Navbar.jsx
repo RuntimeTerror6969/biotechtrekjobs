@@ -106,16 +106,28 @@ const Navbar = () => {
             {user && (
               <>
                 {isAdmin && (
-                  <Link
-                    to="/admin-applications"
-                    className="block px-3 py-2 text-l rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 dark:text-gray-200"
-                    onClick={closeMenu}
-                  >
-                    <div className="flex items-center gap-1.5">
-                      <FileText className="w-5 h-5" />
-                      <span>Manage Applications</span>
-                    </div>
-                  </Link>
+                  <>
+                    <Link
+                      to="/post-job"
+                      className="block px-3 py-2 text-l rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 dark:text-gray-200"
+                      onClick={closeMenu}
+                    >
+                      <div className="flex items-center gap-1.5">
+                        <BriefcaseBusiness className="w-5 h-5" />
+                        <span>Post New Job</span>
+                      </div>
+                    </Link>
+                    <Link
+                      to="/admin-applications"
+                      className="block px-3 py-2 text-l rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 dark:text-gray-200"
+                      onClick={closeMenu}
+                    >
+                      <div className="flex items-center gap-1.5">
+                        <FileText className="w-5 h-5" />
+                        <span>Manage Applications</span>
+                      </div>
+                    </Link>
+                  </>
                 )}
 
                 {isCandidate && (

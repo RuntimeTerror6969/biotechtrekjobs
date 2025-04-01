@@ -131,7 +131,6 @@ const AuthForm = () => {
                 required
               >
                 <option value="candidate">Candidate</option>
-                <option value="employer">Employer</option>
                 <option value="admin">Admin</option>
               </select>
             </div>

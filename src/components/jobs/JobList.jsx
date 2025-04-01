@@ -112,14 +112,6 @@ const JobList = () => {
     <div className="pt-20 max-w-4xl mx-auto p-6 dark:bg-gray-900 min-h-screen">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold mt-12">Available Jobs</h1>
-        {user?.role === "admin" && (
-          <a
-            href="/post-job"
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-          >
-            Post New Job
-          </a>
-        )}
       </div>
       <SearchBar onSearch={handleSearch} />
       <div>
