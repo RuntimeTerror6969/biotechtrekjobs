@@ -1,48 +1,9 @@
-// import { useState } from "react";
-// import { jobs } from "../../data/dummyData";
-// import JobCard from "./JobCard";
-// import SearchBar from "./SearchBar";
-
-// const JobList = () => {
-//   const [filteredJobs, setFilteredJobs] = useState(jobs);
-
-//   const handleSearch = ({ search, type, location }) => {
-//     const filtered = jobs.filter((job) => {
-//       const matchesSearch =
-//         !search ||
-//         job.title.toLowerCase().includes(search.toLowerCase()) ||
-//         job.company.toLowerCase().includes(search.toLowerCase());
-//       const matchesType =
-//         !type || job.type.toLowerCase() === type.toLowerCase();
-//       const matchesLocation =
-//         !location ||
-//         job.location.toLowerCase().includes(location.toLowerCase());
-//       return matchesSearch && matchesType && matchesLocation;
-//     });
-//     setFilteredJobs(filtered);
-//   };
-
-//   return (
-//     <div className="pt-20 max-w-4xl mx-auto p-6 dark:bg-gray-900 min-h-screen">
-//       <h1 className="text-3xl font-bold mb-6 dark:text-white transition-colors duration-200">
-//         Available Jobs
-//       </h1>
-//       <SearchBar onSearch={handleSearch} />
-//       <div>
-//         {filteredJobs.map((job) => (
-//           <JobCard key={job.id} job={job} />
-//         ))}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default JobList;
 import { useState, useEffect } from "react";
 import api from "../../services/api";
 import JobCard from "./JobCard";
 import SearchBar from "./SearchBar";
 import { useAuth } from "../../context/AuthContext";
+import AdSense from  "../ads/adsense";
 
 const JobList = () => {
   const [jobs, setJobs] = useState([]);
@@ -113,13 +74,33 @@ const JobList = () => {
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold mt-12">Available Jobs</h1>
       </div>
+      
+      {/* Top Ad */}
+      <div className="mb-6">
+        <AdSense adSlot="YOUR-TOP-AD-SLOT" />
+      </div>
+
       <SearchBar onSearch={handleSearch} />
       <div>
         {jobs.length === 0 ? (
           <p className="text-center py-10 text-gray-500">No jobs found</p>
         ) : (
           <>
-            {jobs.map((job) => <JobCard key={job._id} job={job} />)}
+            {/* First job card */}
+            {jobs.length > 0 && <JobCard key={jobs[0]._id} job={jobs[0]} />}
+            
+            {/* Middle Ad */}
+            <div className="my-6">
+              <AdSense adSlot="YOUR-MIDDLE-AD-SLOT" />
+            </div>
+            
+            {/* Remaining job cards */}
+            {jobs.slice(1).map((job) => <JobCard key={job._id} job={job} />)}
+            
+            {/* Bottom Ad */}
+            <div className="mt-6">
+              <AdSense adSlot="YOUR-BOTTOM-AD-SLOT" />
+            </div>
             
             {/* Pagination Controls */}
             <div className="flex justify-center items-center space-x-2 mt-8">
