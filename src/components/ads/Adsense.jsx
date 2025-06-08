@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-const AdSense = ({ adSlot, adFormat = 'auto', adStyle = { display: 'block' } }) => {
+const adsense = ({ adSlot, adFormat = 'auto', adStyle = { display: 'block' } }) => {
   useEffect(() => {
     try {
       // Push the ad to the adsbygoogle queue
@@ -22,4 +22,4 @@ const AdSense = ({ adSlot, adFormat = 'auto', adStyle = { display: 'block' } }) 
   );
 };
 
-export default AdSense;
+export default adsense;
