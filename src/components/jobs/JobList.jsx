@@ -3,8 +3,7 @@ import api from "../../services/api";
 import JobCard from "./JobCard";
 import SearchBar from "./SearchBar";
 import { useAuth } from "../../context/AuthContext";
-import AdSense from "../ads/adsense";
-
+import AdSense from "../ads/AdSense"; 
 const JobList = () => {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
